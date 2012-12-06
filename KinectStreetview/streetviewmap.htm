@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Google Maps JavaScript API v3 Example: Street View Layer</title>
+    <link href="https://maps.googleapis.com/maps/documentation/javascript/examples/default.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+      function initialize() {
+        var fenway = new google.maps.LatLng(42.345573,-71.098326);
+        var mapOptions = {
+          center: fenway,
+          zoom: 14,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+      }
+	  
+	  function test(message) {
+		alert(message);
+	  }
+    </script>
+  </head>
+  <body onload="initialize()" scroll="no" >
+    <div id="map_canvas" style="width: 600px; height: 600px"></div>
+  </body>
+</html>

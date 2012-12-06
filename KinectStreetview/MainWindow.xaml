@@ -1,0 +1,81 @@
+﻿<Window x:Class="KinectStreetview.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:kv="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
+        Title="MainWindow" Height="700" Width="950">
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="600" />
+                <ColumnDefinition Width="200*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="240"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Grid Grid.ColumnSpan="2" VerticalAlignment="Top">
+                <Button Content="Load" Height="25" HorizontalAlignment="Center" Name="button1" VerticalAlignment="Top" Width="75" Click="button1_Click" Margin="0,10,40,0" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="10,10,0,0" Text="E:\SYou\kinect\SkeletonRecorder\KinectStreetview\streetviewmap.htm"
+                         Name="urlBox" VerticalAlignment="Top" Width="362" />
+            </Grid>
+            <WebBrowser Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalAlignment="Top" 
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                        ScrollViewer.CanContentScroll="False"
+                        HorizontalAlignment="Left" Name="webBrowser1" 
+                        Width="600" Height="600" LoadCompleted="webBrowser1_LoadCompleted"></WebBrowser>
+            <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="320" Height="240">
+                <kv:KinectDepthViewer x:Name="DepthViewer" KinectSensorManager="{Binding KinectSensorManager}" />
+                <Canvas>
+                    <kv:KinectSkeletonViewer
+                                    KinectSensorManager="{Binding KinectSensorManager}"
+                                    Width="{Binding ElementName=DepthViewer, Path=ActualWidth}"
+                                    Height="{Binding ElementName=DepthViewer, Path=ActualHeight}"
+                                    ShowBones="True" ShowJoints="True" ShowCenter="True" ImageType="Depth" />
+                </Canvas>
+            </Grid>
+            <Grid Grid.Row="2" Grid.Column="1" >
+                <Grid Margin="0, 10, 0, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40" />
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+                    <Button Content="Up" Height="23" HorizontalAlignment="Center"
+                            Name="button2" VerticalAlignment="Top" Width="75" Click="button2_Click" Grid.Column="0" Grid.Row="0" />
+                    <Button Content="Down" Height="23" HorizontalAlignment="Center"
+                            Name="button3" VerticalAlignment="Top" Width="75" Click="button3_Click" Grid.Column="0" Grid.Row="1" />
+                    <Button Content="Left" Height="23" HorizontalAlignment="Center"
+                            Name="button4" VerticalAlignment="Top" Width="75" Click="right_Click" Grid.Column="1" Grid.Row="0" />
+                    <Button Content="Right" Height="23" HorizontalAlignment="Center"
+                            Name="button5" VerticalAlignment="Top" Width="75" Click="button5_Click" Grid.Column="2" Grid.Row="0" />
+                    <Button Content="Zoom Out" Height="23" HorizontalAlignment="Center"
+                            Name="button6" VerticalAlignment="Top" Width="75" Click="button6_Click" Grid.Column="1" Grid.Row="1"/>
+                    <Button Content="Zoom In" Height="23" HorizontalAlignment="Center"
+                            Name="button7" VerticalAlignment="Top" Width="75" Click="button7_Click" Grid.Column="2" Grid.Row="1"/>
+                    <Canvas Height="100" HorizontalAlignment="Left" Name="canvas1" VerticalAlignment="Top" Width="320" 
+                            Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2">
+                        <TextBlock FontSize="24" Canvas.Left="33" Canvas.Top="29" Height="41" Name="textBlock1" Text="Action" Width="255" />
+                    </Canvas>
+                    <Label Content="Camera Angle" Height="28" HorizontalAlignment="Center"
+                           Name="label1" VerticalAlignment="Top" Width="99"  Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="3"/>
+                    <Slider Name="slider1" TickPlacement="BottomRight" AutoToolTipPlacement="BottomRight"
+                    IsSnapToTickEnabled="True" TickFrequency="1"  Grid.ColumnSpan="4" Grid.Row="4"
+                    Minimum="-27" Maximum="27" ValueChanged="slider1_ValueChanged"/>
+                </Grid>
+            </Grid>
+            <Button Content="Debug" Grid.Column="1" Grid.Row="3" Height="23" 
+                    HorizontalAlignment="Right" Name="button8" VerticalAlignment="Top" Width="75" Click="button8_Click" Margin="0,0,10,0" />
+        </Grid>
+        
+    </Grid>
+</Window>
