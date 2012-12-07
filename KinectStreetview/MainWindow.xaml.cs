@@ -167,6 +167,8 @@ namespace KinectStreetview
             }
         }
 
+
+
         private bool RightHandTracked = false;
         private bool RightHandDone = false;
         private int RightSwipeState = 0;
