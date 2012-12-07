@@ -292,7 +292,7 @@ namespace KinectStreetview
                 }
                 else
                 {
-                    if (Math.Abs(leftHand.Position.Z - rightHand.Position.Z) < 0.1&&
+                    if (//Math.Abs(leftHand.Position.Z - rightHand.Position.Z) < 0.2&&
                         leftHand.Position.Y > skeleton.Joints[JointType.ElbowLeft].Position.Y &&
                         rightHand.Position.Y > skeleton.Joints[JointType.ElbowRight].Position.Y)
                     {
