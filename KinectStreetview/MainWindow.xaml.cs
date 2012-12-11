@@ -203,7 +203,7 @@ namespace KinectStreetview
             leftHandFront = (spine.Position.Z - leftHand.Position.Z > 0.2) ? true : false;
             
             //right hand in front of body
-            if (rightHandFront && !leftHandFront && !zoomTracked)
+            if (rightHandFront && !leftHandFront && !zoomTracked && rightHand.Position.Y > spine.Position.Y)
             {
                 if (!RightHandTracked)
                 {
@@ -263,11 +263,17 @@ namespace KinectStreetview
                 if (RightSwipeState > 1)
                 {
                     textBlock1.Text = "Right " + RightSwipeState;
-                    SimulateButtonPress(VirtualKeyCode.RIGHT, 300);
+                    if (carMode)
+                        SimulateButtonPress(VirtualKeyCode.RIGHT, 500);
+                    else
+                        SimulateButtonPress(VirtualKeyCode.RIGHT, 300);
                 }
                 else if (RightSwipeState < -1)
                 {
-                    SimulateButtonPress(VirtualKeyCode.LEFT, 300);
+                    if (carMode)
+                        SimulateButtonPress(VirtualKeyCode.LEFT, 500);
+                    else
+                        SimulateButtonPress(VirtualKeyCode.LEFT, 300);
                     textBlock1.Text = "Left " + RightSwipeState;
                     //gestureSpacing = 20;
                 }
@@ -331,14 +337,31 @@ namespace KinectStreetview
                 float zoomDist = Math.Abs(dist(leftHand, rightHand) - dist(initLeftJoint, initRightJoint));
                 if (zoomState < -1 && zoomDist > 0.2)
                 {
-                    textBlock1.Text = "Zoom out";
-                    SimulateButtonPress(VirtualKeyCode.OEM_MINUS, 300);
+                    if (!carMode)
+                    {
+                        SimulateButtonPress(VirtualKeyCode.OEM_MINUS, 300);
+                        textBlock1.Text = "Zoom out";
+                    }
+                    else
+                    {
+                        SimulateButtonPress(VirtualKeyCode.DOWN, 500);
+                        textBlock1.Text = "DOWN";
+                    }
                 }
                 //else if (zoomLeftState < -1 && zoomRightState > 1)
                 else if (zoomState > 1 && zoomDist > 0.2)
                 {
-                    textBlock1.Text = "Zoom in";
-                    SimulateButtonPress(VirtualKeyCode.OEM_PLUS, 300);
+
+                    if (!carMode)
+                    {
+                        SimulateButtonPress(VirtualKeyCode.OEM_PLUS, 300);
+                        textBlock1.Text = "Zoom in";
+                    }
+                    else
+                    {
+                        SimulateButtonPress(VirtualKeyCode.UP, 500);
+                        textBlock1.Text = "UP";
+                    }
                 }
                 else
                 {
@@ -352,6 +375,8 @@ namespace KinectStreetview
             prevRightJoint = rightHand;
             prevLeftJoint = leftHand;
             //walk
+            if (carMode)
+                return;
             Joint kneeRight = skeleton.Joints[JointType.KneeRight];
             Joint kneeLeft = skeleton.Joints[JointType.KneeLeft];
             bool isWalk = false;
@@ -490,6 +515,16 @@ namespace KinectStreetview
                 button7.Visibility = Visibility.Collapsed;
             }
             debugOn = !debugOn;
+        }
+
+        private bool carMode = false;
+        private void button9_Click(object sender, RoutedEventArgs e)
+        {
+            carMode = !carMode;
+            if (carMode)
+                button9.Content = "Car On";
+            else
+                button9.Content = "Car Off";
         }
         
     }
