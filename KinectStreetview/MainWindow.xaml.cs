@@ -74,6 +74,7 @@ namespace KinectStreetview
 
             // configure the depth stream
             kinectSensorManager.DepthStreamEnabled = true;
+            kinectSensorManager.DepthRange = DepthRange.Near;
 
             kinectSensorManager.TransformSmoothParameters =
                 new TransformSmoothParameters
@@ -215,9 +216,9 @@ namespace KinectStreetview
                 else
                 {
                     //horizontal move
-                    if (Math.Abs(initRightJoint.Position.Y - rightHand.Position.Y) < 0.05 &&
-                        Math.Abs(initRightJoint.Position.Z - rightHand.Position.Z) < 0.05 &&
-                        Math.Abs(rightHand.Position.Y - initRightJoint.Position.Y) < 0.05 )
+                    if (Math.Abs(initRightJoint.Position.Y - rightHand.Position.Y) < 0.1 &&
+                        Math.Abs(initRightJoint.Position.Z - rightHand.Position.Z) < 0.1 &&
+                        Math.Abs(rightHand.Position.Y - initRightJoint.Position.Y) < 0.1 )
                     {
                         //move right
                         if (rightHand.Position.X - prevRightJoint.Position.X > 0.03
@@ -418,7 +419,7 @@ namespace KinectStreetview
         {
             String path = System.IO.Path.GetFullPath(".");
             String url = urlBox.Text;//@"E:\SYou\kinect\SkeletonRecorder\KinectStreetview\streetviewmap.htm";
-            if (System.IO.File.Exists(url))
+            //if (System.IO.File.Exists(url))
             {
                 webBrowser1.Navigate(url);
             }
